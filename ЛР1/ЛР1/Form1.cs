@@ -16,9 +16,11 @@ namespace ЛР1
     {
         private int fileCounter = 1;
         private string openedFilePath;
+        private Lexemes lexemes;
         public Form1()
         {
             InitializeComponent();
+            lexemes = new Lexemes();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -412,6 +414,63 @@ namespace ЛР1
             {
                 Close();
             }
+        }
+
+
+        private void DisplayTokensInDataGridView(List<Element> elements)
+        {
+            lexemeTable.Rows.Clear();
+
+            foreach (var element in elements)
+            {
+                string typeDescription = GetTypeString(element.Type);
+                string location = $"с {element.StartPos} по {element.StartPos + element.Value.Length - 1} символ";
+                lexemeTable.Rows.Add(element.Type, typeDescription, element.Value, location);
+            }
+
+        }
+
+        private string GetTypeString(int type)
+        {
+            switch (type)
+            {
+                case -1:
+                    return "ERROR";
+                case 1:
+                    return "Имя переменной";
+                case 2:
+                    return "Оператор присваивания";
+                case 3:
+                    return "Кавычки";
+                case 4:
+                    return "Символ";
+                case 5:
+                    return "Экспоненциальная запись";
+                case 6:
+                    return "Пробел";
+                case 7:
+                    return "точка";
+                case 8:
+                    return "Число";
+                default:
+                    return "UNKNOWN";
+            }
+        }
+
+        private void toolStripMenuStart_Click(object sender, EventArgs e)
+        {
+            string inputText = editingTextBox.Text;
+            List<Element> elements = lexemes.Tokenize(inputText);
+            DisplayTokensInDataGridView(elements);
+            editingTextBox.Visible = true;
+        }
+
+        private void runParserButton_Click(object sender, EventArgs e)
+        {
+            string inputText = editingTextBox.Text;
+            List<Element> elements = lexemes.Tokenize(inputText);
+            DisplayTokensInDataGridView(elements);
+            editingTextBox.Visible = true;
         }
     }
 

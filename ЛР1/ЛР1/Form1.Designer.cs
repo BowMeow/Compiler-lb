@@ -71,6 +71,11 @@
             this.createdByButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.editingTextBox = new System.Windows.Forms.RichTextBox();
+            this.lexemeTable = new System.Windows.Forms.DataGridView();
+            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Lexeme = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.outputTextBox = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -78,6 +83,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lexemeTable)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -407,6 +413,7 @@
             this.runParserButton.Name = "runParserButton";
             this.runParserButton.Size = new System.Drawing.Size(44, 44);
             this.runParserButton.Text = "Пуск";
+            this.runParserButton.Click += new System.EventHandler(this.runParserButton_Click);
             // 
             // informationButton
             // 
@@ -434,6 +441,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.Location = new System.Drawing.Point(12, 107);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -443,27 +451,73 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.lexemeTable);
             this.splitContainer1.Panel2.Controls.Add(this.outputTextBox);
             this.splitContainer1.Size = new System.Drawing.Size(932, 389);
-            this.splitContainer1.SplitterDistance = 193;
+            this.splitContainer1.SplitterDistance = 192;
             this.splitContainer1.TabIndex = 4;
             // 
             // editingTextBox
             // 
             this.editingTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.editingTextBox.Location = new System.Drawing.Point(0, 0);
+            this.editingTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.editingTextBox.Name = "editingTextBox";
-            this.editingTextBox.Size = new System.Drawing.Size(932, 193);
+            this.editingTextBox.Size = new System.Drawing.Size(932, 192);
             this.editingTextBox.TabIndex = 0;
             this.editingTextBox.Text = "";
+            // 
+            // lexemeTable
+            // 
+            this.lexemeTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lexemeTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Code,
+            this.Type,
+            this.Lexeme,
+            this.Location});
+            this.lexemeTable.Location = new System.Drawing.Point(0, 0);
+            this.lexemeTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lexemeTable.Name = "lexemeTable";
+            this.lexemeTable.RowHeadersWidth = 51;
+            this.lexemeTable.Size = new System.Drawing.Size(932, 193);
+            this.lexemeTable.TabIndex = 5;
+            // 
+            // Code
+            // 
+            this.Code.HeaderText = "Код";
+            this.Code.MinimumWidth = 6;
+            this.Code.Name = "Code";
+            this.Code.Width = 125;
+            // 
+            // Type
+            // 
+            this.Type.HeaderText = "Тип";
+            this.Type.MinimumWidth = 6;
+            this.Type.Name = "Type";
+            this.Type.Width = 125;
+            // 
+            // Lexeme
+            // 
+            this.Lexeme.HeaderText = "Лексема";
+            this.Lexeme.MinimumWidth = 6;
+            this.Lexeme.Name = "Lexeme";
+            this.Lexeme.Width = 125;
+            // 
+            // Location
+            // 
+            this.Location.HeaderText = "Местоположение";
+            this.Location.MinimumWidth = 6;
+            this.Location.Name = "Location";
+            this.Location.Width = 125;
             // 
             // outputTextBox
             // 
             this.outputTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.outputTextBox.Location = new System.Drawing.Point(0, 0);
+            this.outputTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.outputTextBox.Name = "outputTextBox";
             this.outputTextBox.ReadOnly = true;
-            this.outputTextBox.Size = new System.Drawing.Size(932, 192);
+            this.outputTextBox.Size = new System.Drawing.Size(932, 193);
             this.outputTextBox.TabIndex = 0;
             this.outputTextBox.Text = "";
             // 
@@ -490,6 +544,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.lexemeTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -540,6 +595,11 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.RichTextBox editingTextBox;
         private System.Windows.Forms.RichTextBox outputTextBox;
+        private System.Windows.Forms.DataGridView lexemeTable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Code;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Lexeme;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Location;
     }
 }
 
