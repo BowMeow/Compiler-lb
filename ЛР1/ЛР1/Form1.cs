@@ -33,7 +33,6 @@ namespace ЛР1
             {
                 string fileName = $"File{fileCounter}.txt";
                 string filePath = Path.Combine(folderPath, fileName);
-                // Создание файла
                 File.WriteAllText(filePath, $"Содержимое файла {fileCounter}");
                 MessageBox.Show($"Файл {fileName} успешно создан.", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -62,10 +61,8 @@ namespace ЛР1
 
                     try
                     {
-                        // Считываем содержимое файла
                         string fileContent = File.ReadAllText(filePath);
 
-                        // Устанавливаем текст в RichTextBox
                         editingTextBox.Text = fileContent;
                     }
                     catch (Exception ex)
@@ -112,7 +109,7 @@ namespace ЛР1
         {
             if (string.IsNullOrEmpty(openedFilePath))
             {
-                // Если файл не был открыт ранее, используйте диалог сохранения
+
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
                     saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
@@ -123,14 +120,14 @@ namespace ЛР1
                     }
                     else
                     {
-                        return; // Пользователь отменил сохранение
+                        return; 
                     }
                 }
             }
 
             try
             {
-                // Сохраняем содержимое RichTextBox в тот же файл
+
                 File.WriteAllText(openedFilePath, editingTextBox.Text);
                 MessageBox.Show("Файл успешно сохранен", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -262,6 +259,158 @@ namespace ЛР1
                 Process p = new Process();
                 p.StartInfo = new ProcessStartInfo(filePath) { UseShellExecute = true };
                 p.Start();
+            }
+        }
+
+        private void createFileButton_Click(object sender, EventArgs e)
+        {
+            string folderPath = @"C:\Users\kaban\source\repos\ЛР1\ЛР1\bin\Debug";
+            try
+            {
+                string fileName = $"File{fileCounter}.txt";
+                string filePath = Path.Combine(folderPath, fileName);
+                File.WriteAllText(filePath, $"Содержимое файла {fileCounter}");
+                MessageBox.Show($"Файл {fileName} успешно создан.", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                fileCounter++;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void openFileButton_Click(object sender, EventArgs e)
+        {
+            if (!сheckForChanges())
+            {
+                return;
+            }
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = openFileDialog.FileName;
+
+                    try
+                    {
+                        string fileContent = File.ReadAllText(filePath);
+
+                        editingTextBox.Text = fileContent;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при открытии файла: {ex.Message}", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void saveFileButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(openedFilePath))
+            {
+
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        openedFilePath = saveFileDialog.FileName;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+
+            try
+            {
+
+                File.WriteAllText(openedFilePath, editingTextBox.Text);
+                MessageBox.Show("Файл успешно сохранен", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            editingTextBox.Modified = false;
+        }
+
+        private void cancelChangeButton_Click(object sender, EventArgs e)
+        {
+            if (editingTextBox.CanUndo)
+            {
+                editingTextBox.Undo();
+            }
+        }
+
+        private void repeatLastChangeButton_Click(object sender, EventArgs e)
+        {
+            if (editingTextBox.CanRedo)
+            {
+                editingTextBox.Redo();
+            }
+        }
+
+        private void copyTextButton_Click(object sender, EventArgs e)
+        {
+            if (editingTextBox.SelectionLength > 0)
+                Clipboard.SetText(editingTextBox.SelectedText);
+        }
+
+        private void cutTextButton_Click(object sender, EventArgs e)
+        {
+            if (editingTextBox.SelectionLength > 0)
+            {
+                Clipboard.SetText(editingTextBox.SelectedText);
+                editingTextBox.SelectedText = "";
+            }
+        }
+
+        private void insertTextButton_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                editingTextBox.SelectedText = Clipboard.GetText();
+            }
+        }
+
+        private void informationButton_Click(object sender, EventArgs e)
+        {
+            const string filePath = @"C:\Users\kaban\source\repos\ЛР1\Help.html";
+            if (System.IO.File.Exists(filePath))
+            {
+                Process p = new Process();
+                p.StartInfo = new ProcessStartInfo(filePath) { UseShellExecute = true };
+                p.Start();
+            }
+        }
+
+        private void createdByButton_Click(object sender, EventArgs e)
+        {
+            const string filePath = @"C:\Users\kaban\source\repos\ЛР1\Info.html";
+            if (System.IO.File.Exists(filePath))
+            {
+                Process p = new Process();
+                p.StartInfo = new ProcessStartInfo(filePath) { UseShellExecute = true };
+                p.Start();
+            }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (IsRichTextBoxModified())
+            {
+                checkingFileSaving();
+            }
+            else
+            {
+                Close();
             }
         }
     }
